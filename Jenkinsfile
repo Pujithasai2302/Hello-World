@@ -19,6 +19,10 @@ pipeline {
                      {
                          sh 'ant -buildfile build'
                      }
+                     else (env.Build_tool == 'NPM')
+                     {
+                         sh 'npm install'
+                     }
                 }
             }
         }
