@@ -11,17 +11,17 @@ pipeline {
             steps {
                 script 
                 {
-                    if ( env.Build_Tool == 'Maven')
+                    if ( env.Build_Tool == 'NPM')
                      {
-                         sh 'mvn package -s settings.xml'
+                         sh 'cd sfguides/site && npm install'
                      }
                      else if ( env.Build_Tool == 'Ant')
                      {
                          sh 'ant -buildfile build'
                      }
-                     else (env.Build_tool == 'NPM')
+                     else (env.Build_tool == 'Maven')
                      {
-                         sh 'cd sfguides/site && npm install'
+                         sh 'mvn package -s settings.xml'
                      }
                 }
             }
