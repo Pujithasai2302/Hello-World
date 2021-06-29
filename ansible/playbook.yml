@@ -5,7 +5,7 @@
   vars:
     key_name: reusablepipeline_key
     region: us-east-1
-    image: ami-09e67e426f25ce0d7
+    image: ami-0aeeebd8d2ab47354
     id: "web-app"
     sec_group: "{{ id }}-sec"
   tasks:
@@ -33,60 +33,13 @@
         group: "{{ sec_group }}"
         image: "{{ image }}"
         instance_type: t2.micro
-        count: 1
         instance_tags:
           Name: PipelineDemo
         region: "{{ region }}"
         vpc_subnet_id: subnet-8408a6a5
         wait: true
-      register: ec2
-
-    - name: Wait for SSH to come up
-      wait_for:
-        host: "{{ item.public_dns_name }}"
-        port: 22
-        state: started
-      loop: "{{ ec2.instances }}"
-
-    - name: copy artifacts to server
-        copy: 
-          src: /opt/build/*
-          dest: /opt/
-
-
-    - name: Add new instance to host group
-      add_host:
-        hostname: "{{ item.public_ip }}"
-        groupname: webserver
-      loop: "{{ ec2.instances }}"
-
-    - name: Update EC2
-        shell: apt-get update -y
-      become: yes  
-      delegate_to: webserver
-
-    - name: install OpenJDK 11
-        shell: apt install openjdk-11-jdk
-      become: yes  
-      delegate_to: webserver
-
-    - name: NPM Install
-        shell: |
-          curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
-          apt -y install nodejs
-          apt-get install python -y
-          apt install npm -y
-          npm i -g gulp-cli
-          wget https://golang.org/dl/go1.16.5.linux-amd64.tar.gz
-          rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.5.linux-amd64.tar.gz
-          export PATH=$PATH:/usr/local/go/bin
-          go get github.com/googlecodelabs/tools/claat
-          NPM_CONFIG_PREFIX=~/.npm-global
-    become: yes  
-      delegate_to: webserver
-
-    - name: Launch Snowflake
-        shell: |
-          cd /opt/sfguides/site/ && npm run serve
-      become: yes  
-      delegate_to: webserver
+      register: webapp_server
+    - name: Deploying artifacts
+      copy:
+          src: /var/lib/jenkins/workspace/generic_build/server/target/server.jar
+          dest: /tmp/server.jar
