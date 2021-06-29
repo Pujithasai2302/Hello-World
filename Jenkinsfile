@@ -19,7 +19,7 @@ pipeline {
                      {
                          sh 'ant -buildfile build'
                      }
-                     else (env.Build_tool == 'Maven')
+                     else if (env.Build_tool == 'Maven')
                      {
                          sh 'mvn package -s settings.xml'
                      }
