@@ -15,10 +15,6 @@ pipeline {
                      {
                          sh 'mvn package -s settings.xml'
                      }
-                     else if ( env.Build_Tool == 'NPM')
-                     {
-                         sh 'cd sfguides/site && npm install'
-                     }
                      else if ( env.Build_Tool == 'Ant')
                      {
                          sh 'ant -buildfile build'
