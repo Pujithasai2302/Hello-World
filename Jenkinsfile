@@ -21,7 +21,7 @@ pipeline {
                      }
                      else (env.Build_tool == 'NPM')
                      {
-                         sh 'npm install'
+                         sh 'cd sfguides/site && npm install'
                      }
                 }
             }
