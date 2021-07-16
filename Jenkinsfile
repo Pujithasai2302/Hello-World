@@ -33,7 +33,7 @@ pipeline {
                         if (env.Perform_Sonar_Scan == 'true' )
                         {
                                 
-                                sh 'mvn sonar:sonar -Dsonar.projectKey=ignite -Dsonar.host.url=http://18.204.3.136:8080 -Dsonar.login=31e9775aeb78c139202e47b507b0a3a84bc3636b'
+                                sh 'mvn sonar:sonar -Dsonar.projectKey=ignite -Dsonar.host.url=http://34.207.63.62:8080 -Dsonar.login=31e9775aeb78c139202e47b507b0a3a84bc3636b'
                         }
                    }
                 }
