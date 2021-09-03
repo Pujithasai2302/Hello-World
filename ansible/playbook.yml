@@ -34,7 +34,7 @@
         image: "{{ image }}"
         instance_type: t2.micro
         instance_tags:
-          Name: PipelineDemo
+          Name: KXPipelineDemo
         region: "{{ region }}"
         vpc_subnet_id: subnet-8408a6a5
         wait: true
