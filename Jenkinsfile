@@ -11,17 +11,13 @@ pipeline {
             steps {
                 script 
                 {
-                     if (env.Build_tool == 'Maven')
+                    if ( env.Build_Tool == 'Maven')
                      {
                          sh 'mvn package -s settings.xml'
                      }
                      else if ( env.Build_Tool == 'Ant')
                      {
                          sh 'ant -buildfile build'
-                     }
-                     else if (env.Build_tool == 'NPM')
-                     {
-                         sh 'install np'
                      }
                 }
             }
